@@ -1,287 +1,475 @@
-Great — here are **all projects together**, each with a clear title and a compact, runnable Python template (~20–30 lines) using Keras / NumPy.
-(Each block is independent — run them in separate files or cells.)
+# Web Practicals — HTML5 / CSS / JavaScript
+
+This repository contains 8 practical exercises (ready-to-upload) for HTML5, CSS and JavaScript. Each exercise has files you can place in a folder and open the main HTML file in a browser. Below are the code snippets and short usage notes. Copy each file to its filename and push to GitHub.
 
 ---
 
-# **1. IMPLEMENT CHARACTER AND DIGIT RECOGNITION USING DNN**
+## 1. Create a Web page using HTML5 Formatting Tags (CO1)
 
-```python
-# Character & Digit Recognition using DNN (MNIST)
-import numpy as np, tensorflow as tf
-from tensorflow.keras import layers, models, datasets
+**Files:** `formatting.html`
 
-(x,y),(xt,yt)=datasets.mnist.load_data()
-x=x.reshape(-1,784)/255.0; xt=xt.reshape(-1,784)/255.0
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HTML5 Formatting Tags</title>
+</head>
+<body>
+  <header>
+    <h1>HTML5 Formatting Tags Demo</h1>
+    <p><em>Simple showcase of semantic and formatting tags</em></p>
+  </header>
 
-m=models.Sequential([
-  layers.Dense(512,activation='relu',input_shape=(784,)),
-  layers.Dense(256,activation='relu'),
-  layers.Dropout(0.2),
-  layers.Dense(10,activation='softmax')
-])
-m.compile('adam','sparse_categorical_crossentropy',metrics=['acc'])
-m.fit(x,y,epochs=6,batch_size=128,validation_split=0.1,verbose=2)
-print("Eval:",m.evaluate(xt,yt,verbose=0))
+  <main>
+    <section>
+      <h2>Text Semantics</h2>
+      <p>This paragraph shows <strong>strong</strong>, <em>emphasis</em>, <mark>highlight</mark>, and <small>small print</small>.</p>
+      <p>Sample: <ins>inserted text</ins> and <del>deleted text</del>.</p>
+    </section>
+
+    <section>
+      <h2>Inline Elements</h2>
+      <p>Keyboard: <kbd>Ctrl</kbd> + <kbd>C</kbd>. Variable: <var>x</var>. Sample code: <code>console.log('hi')</code>.</p>
+    </section>
+
+    <section>
+      <h2>Block Elements</h2>
+      <article>
+        <h3>Article Title</h3>
+        <p>This is an <code>&lt;article&gt;</code> block containing a <q>short quote</q> and a <blockquote cite="#">longer quotation block</blockquote>.</p>
+      </article>
+
+      <aside>
+        <h4>Aside</h4>
+        <p>Related note or tip goes here.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p>Author: Pandi Harshan | Practical 1</p>
+  </footer>
+</body>
+</html>
 ```
 
 ---
 
-# **2. IMPLEMENT OVERFITTING IN NEURAL NETWORK FOR TIME-SERIES PREDICTION**
+## 2. Create a Web page using HTML5 List & Tables (CO1)
 
-```python
-# Force Overfitting on synthetic time-series (stock-like)
-import numpy as np, tensorflow as tf
-from tensorflow.keras import layers, models
+**Files:** `lists_tables.html`
 
-t=np.arange(0,300); data=np.sin(0.1*t)+0.1*np.random.randn(300)
-seq=20
-X=np.array([data[i:i+seq] for i in range(len(data)-seq)]); y=data[seq:]
-X=X.reshape(-1,seq); y=y.reshape(-1,1)
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lists and Tables</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #444; padding: 8px; text-align: left; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+  <h1>HTML Lists & Tables</h1>
 
-m=models.Sequential([
-  layers.Dense(256,activation='relu',input_shape=(seq,)),
-  layers.Dense(256,activation='relu'),
-  layers.Dense(1)
-])
-m.compile('adam','mse')
-m.fit(X,y,epochs=200,batch_size=8,verbose=0)  # long training -> overfit
-print("Train MSE:",m.evaluate(X,y,verbose=0))
+  <section>
+    <h2>Ordered List</h2>
+    <ol>
+      <li>First item</li>
+      <li>Second item
+        <ol type="a">
+          <li>Sub item a</li>
+          <li>Sub item b</li>
+        </ol>
+      </li>
+      <li>Third item</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Unordered List</h2>
+    <ul>
+      <li>Bullet one</li>
+      <li>Bullet two
+        <ul>
+          <li>Nested bullet</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Definition List</h2>
+    <dl>
+      <dt>HTML</dt>
+      <dd>Hypertext Markup Language</dd>
+      <dt>CSS</dt>
+      <dd>Cascading Style Sheets</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Table Example</h2>
+    <table>
+      <caption>Student Marks</caption>
+      <thead>
+        <tr><th>Roll</th><th>Name</th><th>Maths</th><th>Science</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Asha</td><td>85</td><td>90</td></tr>
+        <tr><td>2</td><td>Rohan</td><td>78</td><td>82</td></tr>
+        <tr><td>3</td><td>Kavya</td><td>92</td><td>88</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="4">Generated for practical: Lists & Tables</td></tr>
+      </tfoot>
+    </table>
+  </section>
+</body>
+</html>
 ```
 
 ---
 
-# **3. IMPLEMENT NUMBER PLATE RECOGNITION USING DNN (SINGLE-FRAME PIPELINE)**
+## 3. Design a Web page to capture data using HTML forms (CO2)
 
-```python
-# Number Plate Recognition - detection + simple OCR (template)
-import cv2, numpy as np, tensorflow as tf
-from tensorflow.keras import layers,models
+**Files:** `form_capture.html`
 
-# placeholder: load and preprocess image
-img = cv2.imread('car.jpg',0)
-img = cv2.resize(img,(320,240))
-# simple plate region proposal by edge + contour (toy)
-ed = cv2.Canny(img,100,200)
-cnts,_ = cv2.findContours(ed,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-box=None
-for c in cnts:
-    x,y,w,h = cv2.boundingRect(c)
-    if w>80 and h>20 and w/h>2:
-        box=(x,y,w,h); break
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Form Capture</title>
+</head>
+<body>
+  <h1>Student Registration Form</h1>
+  <form id="regForm" action="#" method="post">
+    <label>Full Name:<br>
+      <input type="text" name="fullname" required>
+    </label><br><br>
 
-if box:
-  x,y,w,h=box; plate=img[y:y+h,x:x+w]; plate=cv2.resize(plate,(128,32))/255.0
-  plate=plate.reshape(1,32,128,1)
-  # simple CNN OCR (define & load or train)
-  model=models.Sequential([layers.Conv2D(32,3,activation='relu',input_shape=(32,128,1)),
-                           layers.Flatten(),layers.Dense(64,activation='relu'),layers.Dense(36,activation='softmax')])
-  # here model would be pretrained; for demo predict dummy
-  pred=np.argmax(np.ones((1,36)))
-  print("Plate region found, demo predicted class idx:",pred)
-else:
-  print("No plate-like region detected")
+    <label>Email:<br>
+      <input type="email" name="email" required>
+    </label><br><br>
+
+    <label>Gender:<br>
+      <input type="radio" name="gender" value="male"> Male
+      <input type="radio" name="gender" value="female"> Female
+      <input type="radio" name="gender" value="other"> Other
+    </label><br><br>
+
+    <label>Courses:<br>
+      <select name="course">
+        <option value="bsc">B.Sc</option>
+        <option value="btech">B.Tech</option>
+        <option value="msc">M.Sc</option>
+      </select>
+    </label><br><br>
+
+    <label>Skills:<br>
+      <input type="checkbox" name="skill" value="html"> HTML
+      <input type="checkbox" name="skill" value="css"> CSS
+      <input type="checkbox" name="skill" value="js"> JavaScript
+    </label><br><br>
+
+    <label>About You:<br>
+      <textarea name="about" rows="4" cols="40"></textarea>
+    </label><br><br>
+
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </form>
+
+  <script>
+    // Simple handler to show submitted values (no server)
+    document.getElementById('regForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const data = new FormData(this);
+      const obj = {};
+      for (const [k,v] of data.entries()) obj[k]=v;
+      alert('Form submitted (preview):\n' + JSON.stringify(obj, null, 2));
+    });
+  </script>
+</body>
+</html>
 ```
 
 ---
 
-# **4. GENERATE CARTOON CHARACTERS USING GANS (SIMPLE DCGAN TEMPLATE)**
+## 4. Create a Web page with CSS Styles – Internal & External Style Sheet (CO2)
 
-```python
-# Simple DCGAN training loop template (cartoon-like dataset)
-import numpy as np, tensorflow as tf
-from tensorflow.keras import layers, models, optimizers, datasets
+**Files:** `styles_internal.html`, `styles_external.css`
 
-latent_dim=100
-def build_gen():
-  g=models.Sequential([layers.Dense(8*8*128,input_shape=(latent_dim,)),
-                       layers.Reshape((8,8,128)),
-                       layers.Conv2DTranspose(128,4,strides=2,activation='relu',padding='same'),
-                       layers.Conv2DTranspose(64,4,strides=2,activation='relu',padding='same'),
-                       layers.Conv2D(3,7,activation='tanh',padding='same')])
-  return g
+**styles_external.css**
 
-def build_disc():
-  d=models.Sequential([layers.Conv2D(64,4,strides=2,input_shape=(32,32,3),activation='leaky_relu'),
-                       layers.Flatten(),layers.Dense(1,activation='sigmoid')])
-  return d
+```css
+body{font-family: Arial, sans-serif; margin:20px}
+.header{background:#0b6; padding:12px; border-radius:6px}
+.card{border:1px solid #ccc; padding:12px; margin:12px 0; border-radius:6px}
+.btn{display:inline-block; padding:8px 12px; border-radius:4px; text-decoration:none}
+```
 
-G=build_gen(); D=build_disc()
-opt=optimizers.Adam(0.0002)
-D.compile(loss='binary_crossentropy',optimizer=opt); D.trainable=True
-# toy training loop (dataset must be prepared 32x32x3 scaled -1..1)
-print("GAN models ready - training requires cartoon dataset")
+**styles_internal.html**
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CSS Internal & External</title>
+  <link rel="stylesheet" href="styles_external.css">
+  <style>
+    .internal-note{color:#444; font-style:italic}
+    .btn.primary{background:#0066cc; color:#fff}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>External + Internal CSS Example</h1>
+    <p class="internal-note">This paragraph is styled using an internal stylesheet.</p>
+  </div>
+
+  <div class="card">
+    <h2>Content Card</h2>
+    <p>This card gets border and padding from the external stylesheet.</p>
+    <a class="btn primary" href="#">Primary Action</a>
+  </div>
+</body>
+</html>
 ```
 
 ---
 
-# **5. IMPLEMENT SENTIMENT ANALYSIS USING LSTM**
+## 5. Create a Web page with Navigation Menu and hover effect using HTML and CSS (CO3)
 
-```python
-# Sentiment analysis (IMDb) using LSTM
-import tensorflow as tf
-from tensorflow.keras import layers, models, datasets, preprocessing
+**Files:** `nav_menu.html`, `nav_style.css`
 
-maxlen=200; vocab=10000
-(x,y),(xt,yt)=datasets.imdb.load_data(num_words=vocab)
-x=preprocessing.sequence.pad_sequences(x,maxlen=maxlen)
-xt=preprocessing.sequence.pad_sequences(xt,maxlen=maxlen)
+**nav_style.css**
 
-m=models.Sequential([
-  layers.Embedding(vocab,128,input_length=maxlen),
-  layers.LSTM(128,return_sequences=False),
-  layers.Dense(64,activation='relu'),
-  layers.Dense(1,activation='sigmoid')
-])
-m.compile('adam','binary_crossentropy',metrics=['acc'])
-m.fit(x,y,epochs=3,batch_size=128,validation_split=0.1)
-print("Eval:",m.evaluate(xt,yt,verbose=0))
+```css
+*{box-sizing:border-box}
+nav{background:#333}
+nav ul{list-style:none; margin:0; padding:0; display:flex}
+nav li{margin:0}
+nav a{display:block; padding:14px 20px; color:#fff; text-decoration:none}
+nav a:hover{background:#555}
+.active{background:#0077cc}
+.container{padding:16px}
+```
+
+**nav_menu.html**
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Navigation Menu</title>
+  <link rel="stylesheet" href="nav_style.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <h1>Navigation with Hover</h1>
+    <p>Hover over menu items to see the effect.</p>
+  </div>
+</body>
+</html>
 ```
 
 ---
 
-# **6. BUILD A REAL-TIME EMAIL SPAM DETECTOR USING GRU (TEXT BATCH TEMPLATE)**
+## 6. Perform a client side validation using JavaScript user defined function and DOM objects (CO3)
 
-```python
-# GRU based spam detector (toy)
-import numpy as np, tensorflow as tf
-from tensorflow.keras import layers, models, preprocessing
+**Files:** `client_validation.html`
 
-# assume texts->sequences preprocessed
-# toy dataset
-texts = ["win money now","meeting schedule","cheap meds","project update"]
-labels = [1,0,1,0]
-tokenizer=preprocessing.text.Tokenizer(num_words=2000); tokenizer.fit_on_texts(texts)
-seq=tokenizer.texts_to_sequences(texts)
-X=preprocessing.sequence.pad_sequences(seq,100)
-y=np.array(labels)
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Client-side Validation</title>
+  <style>.error{color:red}</style>
+</head>
+<body>
+  <h1>Login Form with Client-side Validation</h1>
+  <form id="loginForm" novalidate>
+    <label>Username:<br><input type="text" id="username" required></label><br><br>
+    <label>Password:<br><input type="password" id="password" required></label><br><br>
+    <button type="submit">Login</button>
+  </form>
+  <p id="msg" class="error"></p>
 
-m=models.Sequential([layers.Embedding(2000,64,input_length=100),
-                     layers.GRU(64),
-                     layers.Dense(32,activation='relu'),
-                     layers.Dense(1,activation='sigmoid')])
-m.compile('adam','binary_crossentropy',metrics=['acc'])
-m.fit(X,y,epochs=10,verbose=0)
-# demo predict
-print("Demo spam prob:",m.predict(X[:1])[0,0])
+  <script>
+    function validateUser(){
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value;
+      if(u.length < 3) return 'Username must be at least 3 characters';
+      if(p.length < 6) return 'Password must be at least 6 characters';
+      return '';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const err = validateUser();
+      const msg = document.getElementById('msg');
+      if(err){ msg.textContent = err; }
+      else { msg.textContent='Login successful (client-side)'; }
+    });
+  </script>
+</body>
+</html>
 ```
 
 ---
 
-# **7. PREDICT ACTIVITY FROM SENSOR DATA USING SOFTMAX CLASSIFIER**
+## 7. Design a Web page to illustrate the concept of event handling through JavaScript (CO4)
 
-```python
-# Activity recognition (multiclass softmax) - toy accelerometer windows
-import numpy as np, tensorflow as tf
-from tensorflow.keras import layers, models
+**Files:** `event_handling.html`
 
-# synthetic dataset: windows of 50 timesteps with 3 axes
-n=1200; seq=50; feat=3; classes=4
-X=np.random.randn(n,seq,feat); y=np.random.randint(0,classes,n)
-X=X.reshape(n,seq*feat)
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Event Handling Demo</title>
+  <style>
+    #box{width:150px;height:150px;border:2px solid #333;display:flex;align-items:center;justify-content:center;margin:20px}
+    .controls button{margin:4px}
+  </style>
+</head>
+<body>
+  <h1>Event Handling Examples</h1>
+  <div id="box">Hover or Click me</div>
+  <div class="controls">
+    <button id="btnClick">Click</button>
+    <button id="btnDbl">Double Click</button>
+    <button id="btnKey">Listen Keydown</button>
+  </div>
+  <p id="log">Event log will appear here</p>
 
-m=models.Sequential([
-  layers.Dense(256,activation='relu',input_shape=(seq*feat,)),
-  layers.Dense(128,activation='relu'),
-  layers.Dense(classes,activation='softmax')
-])
-m.compile('adam','sparse_categorical_crossentropy',metrics=['acc'])
-m.fit(X,y,epochs=15,batch_size=32,verbose=0)
-print("Acc demo:",m.evaluate(X,y,verbose=0))
+  <script>
+    const box = document.getElementById('box');
+    const log = document.getElementById('log');
+
+    box.addEventListener('mouseenter', ()=> log.textContent = 'Mouse entered box');
+    box.addEventListener('mouseleave', ()=> log.textContent = 'Mouse left box');
+    box.addEventListener('click', ()=> log.textContent = 'Box clicked');
+
+    document.getElementById('btnClick').addEventListener('click', ()=> alert('Button clicked'));
+    document.getElementById('btnDbl').addEventListener('dblclick', ()=> alert('Button double clicked'));
+
+    let keyListening = false;
+    document.getElementById('btnKey').addEventListener('click', ()=>{
+      if(keyListening) return;
+      keyListening = true;
+      log.textContent = 'Press any key...';
+      window.addEventListener('keydown', function onKey(e){
+        log.textContent = 'Key pressed: ' + e.key;
+        window.removeEventListener('keydown', onKey);
+        keyListening = false;
+      });
+    });
+  </script>
+</body>
+</html>
 ```
 
 ---
 
-# **8. IMPLEMENT SPEECH RECOGNITION (STT) + SIMPLE NLP POSTPROCESS**
+## 8. Develop a Web page and perform login validation and Navigation using JavaScript (CO4)
 
-```python
-# Speech->Text demo using python- speech_recognition (offline demo)
-import speech_recognition as sr, tensorflow as tf
-from tensorflow.keras import layers, models
+**Files:** `login_nav.html`
 
-r=sr.Recognizer()
-with sr.AudioFile('sample.wav') as src:
-  audio=r.record(src)
-try:
-  text=r.recognize_google(audio)  # needs internet; replace with local model as needed
-  print("Transcribed:",text)
-  # tiny NLP sentiment example using a pretrained tokenizer/model omitted for brevity
-except Exception as e:
-  print("STT failed:",e)
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login + Navigation</title>
+  <style>
+    body{font-family:Arial;margin:20px}
+    #app{max-width:600px}
+    nav a{margin-right:8px}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Login and Simple Navigation</h1>
+
+    <div id="loginView">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <label>Username:<br><input id="user" required></label><br><br>
+        <label>Password:<br><input id="pass" type="password" required></label><br><br>
+        <button type="submit">Login</button>
+      </form>
+      <p id="loginMsg" style="color:red"></p>
+    </div>
+
+    <div id="mainView" style="display:none">
+      <nav>
+        <a href="#home" data-target="home">Home</a>
+        <a href="#profile" data-target="profile">Profile</a>
+        <a href="#logout" id="logoutLink">Logout</a>
+      </nav>
+
+      <section id="home" class="page"> 
+        <h2>Home</h2>
+        <p>Welcome to the home page.</p>
+      </section>
+
+      <section id="profile" class="page" style="display:none">
+        <h2>Profile</h2>
+        <p id="profileInfo"></p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const loginView = document.getElementById('loginView');
+    const mainView = document.getElementById('mainView');
+    const loginMsg = document.getElementById('loginMsg');
+
+    // Simple hard-coded credentials (for practical only)
+    const CREDENTIALS = { user: 'student', pass: 'password123' };
+
+    loginForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const u = document.getElementById('user').value.trim();
+      const p = document.getElementById('pass').value;
+      if(u === CREDENTIALS.user && p === CREDENTIALS.pass){
+        loginMsg.textContent = '';
+        loginView.style.display = 'none';
+        mainView.style.display = 'block';
+        document.getElementById('profileInfo').textContent = 'Username: ' + u + '\nRole: Student';
+      } else {
+        loginMsg.textContent = 'Invalid credentials';
+      }
+    });
+
+    // Navigation handling
+    document.querySelectorAll('nav a[data-target]').forEach(a => {
+      a.addEventListener('click', function(e){
+        e.preventDefault();
 ```
-
----
-
-# **9. PLANT DISEASE DETECTION USING CNN FROM LEAF IMAGES**
-
-```python
-# Plant disease detection - CNN template
-import tensorflow as tf
-from tensorflow.keras import layers, models, preprocessing
-
-img_size=(128,128)
-train_datagen=preprocessing.image.ImageDataGenerator(rescale=1./255,validation_split=0.1)
-train_gen=train_datagen.flow_from_directory('leaf_dataset',target_size=img_size,batch_size=32,subset='training')
-val_gen=train_datagen.flow_from_directory('leaf_dataset',target_size=img_size,batch_size=32,subset='validation')
-
-m=models.Sequential([
-  layers.Conv2D(32,3,activation='relu',input_shape=(*img_size,3)),
-  layers.MaxPooling2D(),
-  layers.Conv2D(64,3,activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Flatten(),
-  layers.Dense(128,activation='relu'),
-  layers.Dense(train_gen.num_classes,activation='softmax')
-])
-m.compile('adam','categorical_crossentropy',metrics=['acc'])
-m.fit(train_gen,validation_data=val_gen,epochs=10)
-```
-
----
-
-# **10. OBJECT DETECTION & CLASSIFICATION FOR TRAFFIC USING DNN (SIMPLE SSD/TEMPLATE)**
-
-```python
-# Simple object detection pipeline stub using pretrained MobileNet + SSD-like head (concept)
-import cv2, numpy as np, tensorflow as tf
-from tensorflow.keras.applications import MobileNetV2
-base=MobileNetV2(include_top=False,input_shape=(224,224,3),weights='imagenet')
-x=tf.keras.layers.GlobalAveragePooling2D()(base.output)
-cls=tf.keras.layers.Dense(10,activation='softmax')(x)  # 10 traffic classes
-model=tf.keras.Model(inputs=base.input,outputs=cls)
-model.compile('adam','categorical_crossentropy')
-# Use a proper object detector (YOLO/SSD) for bounding boxes; this is classification backbone demo.
-print("Backbone ready - integrate with detection head for bbox + class")
-```
-
----
-
-# **11. ONLINE FRAUD DETECTION USING SEQUENTIAL MODELS (LSTM/GRU)**
-
-```python
-# Sequence model for fraud detection (transactions time series per user)
-import numpy as np, tensorflow as tf
-from tensorflow.keras import layers, models
-
-# synthetic sequence features per user: 30 timesteps, 10 features
-n=1000; tim=30; f=10
-X=np.random.randn(n,tim,f); y=(np.random.rand(n)>0.95).astype(int)  # imbalanced
-X=X.reshape(n,tim,f)
-
-m=models.Sequential([layers.Masking(input_shape=(tim,f)),
-                     layers.LSTM(128,return_sequences=False),
-                     layers.Dense(64,activation='relu'),
-                     layers.Dense(1,activation='sigmoid')])
-m.compile('adam','binary_crossentropy',metrics=['accuracy'])
-m.fit(X,y,epochs=12,batch_size=32,verbose=0)
-print("Train eval:",m.evaluate(X,y,verbose=0))
-```
-
----
-
-If you want, I can:
-
-* Turn any of these templates into a **full README + dataset links**,
-* Expand a chosen template into a **complete notebook** with training, saving, and evaluation plots,
-* Or **compress** them into ready-to-print single-file scripts.
-
-Which next?
